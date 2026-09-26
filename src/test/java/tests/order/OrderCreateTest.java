@@ -2,7 +2,6 @@ package tests.order;
 
 import client.ServiceClient;
 import io.qameta.allure.Description;
-import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import model.Order;
 import model.TrackResponse;
@@ -27,17 +26,18 @@ public class OrderCreateTest {
     private ServiceClient client;
     private int createdTrack;
 
-    public OrderCreateTest(String[] colors) {
+    public OrderCreateTest(String[] colors, String colorsDescription) {
         this.colors = colors;
+        // colorsDescription нужен только для имени прогона (name-атрибут @Parameters)
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Цвет: {1}")
     public static Collection<Object[]> getColorOptions() {
         return Arrays.asList(new Object[][]{
-                {new String[]{"BLACK"}},
-                {new String[]{"GREY"}},
-                {new String[]{"BLACK", "GREY"}},
-                {new String[]{}}
+                {new String[]{"BLACK"}, "BLACK"},
+                {new String[]{"GREY"}, "GREY"},
+                {new String[]{"BLACK", "GREY"}, "BLACK и GREY"},
+                {new String[]{}, "без цвета"}
         });
     }
 
@@ -54,7 +54,6 @@ public class OrderCreateTest {
         }
     }
 
-    @DisplayName("Создание заказа с разными вариантами цвета")
     @Description("Варианты color: BLACK, GREY, оба цвета, без цвета — код 201 и track в теле")
     @Test
     public void createOrderWithColors() {
