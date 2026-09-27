@@ -94,4 +94,17 @@ public class CourierLoginTest {
         assertEquals(400, response.statusCode());
         response.then().body("message", equalTo("Недостаточно данных для входа"));
     }
+
+    // Баг API: фактически ручка отвечает 504 "Service unavailable" (проверено 27.09.2026),
+    // поэтому тест красный. Ожидание по документации — 400, как и при отсутствии логина.
+    @DisplayName("Авторизация без пароля")
+    @Description("Нет обязательного поля password: код 400 и сообщение об ошибке")
+    @Test
+    public void loginCourierWithoutPasswordFails() {
+        Response response = client.loginCourier(
+                new CourierCredentials(courier.getLogin(), null));
+
+        assertEquals(400, response.statusCode());
+        response.then().body("message", equalTo("Недостаточно данных для входа"));
+    }
 }
