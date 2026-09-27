@@ -39,6 +39,13 @@
             <version>2.10.1</version>
             <scope>test</scope>
         </dependency>
+        <!-- Генерация геттеров/сеттеров/конструкторов (замечание ревью) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- модуль взаимодействия Allure и Junit -->
         <dependency>
             <groupId>io.qameta.allure</groupId>
